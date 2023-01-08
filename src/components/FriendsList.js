@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 import styles from '../styles/home.module.css';
 import { useAuth } from '../hooks';
 
 const FriendsList = () => {
   const auth = useAuth();
+  const navigate = useNavigate();
   const { friends = [] } = auth.user;
 
+  console.log(friends);
   return (
     <div className={styles.friendsList}>
       <div className={styles.header}>Friends</div>
@@ -18,14 +20,17 @@ const FriendsList = () => {
       {friends &&
         friends.map((friend) => (
           <div key={`friend-${friend._id}`}>
-            <Link className={styles.friendsItem} to={`/user/${friend._id}`}>
+            <Link
+              className={styles.friendsItem}
+              to={`/user/${friend.to_user._id}`}
+            >
               <div className={styles.friendsImg}>
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
                   alt=""
                 />
               </div>
-              <div className={styles.friendsName}>{friend.to_user.email}</div>
+              <div className={styles.friendsName}>{friend.to_user.email} </div>
             </Link>
           </div>
         ))}

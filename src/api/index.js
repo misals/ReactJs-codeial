@@ -10,6 +10,7 @@ const customFetch = async (url, { body, ...customConfig }) => {
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
+
   const config = {
     ...customConfig,
     headers: {
@@ -100,5 +101,27 @@ export const addPost = (content) => {
     body: {
       content,
     },
+  });
+};
+
+export const createComment = async (content, postId) => {
+  return customFetch(API_URLS.comment(), {
+    method: 'POST',
+    body: {
+      post_id: postId,
+      content,
+    },
+  });
+};
+
+export const toggleLike = async (itemId, itemType) => {
+  return customFetch(API_URLS.toggleLike(itemId, itemType), {
+    method: 'POST',
+  });
+};
+
+export const searchUsers = async (searchText) => {
+  return customFetch(API_URLS.searchUsers(searchText), {
+    method: 'GET',
   });
 };

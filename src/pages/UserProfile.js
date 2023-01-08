@@ -12,7 +12,7 @@ const UserProfile = () => {
   const [requestInProgress, setRequestInProgress] = useState(false);
   const { userId } = useParams();
   const { addToast } = useToasts();
-  const history = useNavigate();
+  const navigate = useNavigate();
   const auth = useAuth();
 
   useEffect(() => {
@@ -25,14 +25,14 @@ const UserProfile = () => {
         addToast(response.message, {
           appearance: 'error',
         });
-        return history.push('/');
+        return navigate(`/`);
       }
 
       setLoading(false);
     };
 
     getUser();
-  }, [userId, history, addToast]);
+  }, [userId, navigate, addToast]);
 
   if (loading) {
     return <Loader />;
@@ -41,6 +41,7 @@ const UserProfile = () => {
   const checkIfUserIsAFriend = () => {
     const friends = auth.user.friends;
 
+    console.log(friends);
     const friendIds = friends.map((friend) => friend.to_user._id);
     const index = friendIds.indexOf(userId);
 
